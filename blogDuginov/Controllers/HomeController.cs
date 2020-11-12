@@ -9,10 +9,17 @@ using blogDuginov.Models;
 
 namespace blogDuginov.Controllers
 {
+    /// <summary>
+    /// Контроллер для работы с индексным файлом
+    /// </summary>
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
 
+        /// <summary>
+        /// Констуркторкласса <see cref="HomeController"/>
+        /// </summary>
+        /// <param name="TempRepository">Репозиторий......</param>
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
