@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "Домашняя Страница";
+}
+
+<div class="text-center">
+    <h1 class="display-4">КРАФТ</h1>
+    @foreach (var post in Model)
+    {
+        <div class="card">
+            <div class="card-header">
+                @post.Title
+            </div>
+            <div class="card-body">
+                <blockquote class="blockquote mb-0">
+                    <p>@post.Data</p>
+                    <footer class="blockquote-footer">@post.Author (<cite title="Source Title">@post.Date</cite>)</footer>
+                </blockquote>
+            </div>
+        </div>
+    }
+</div>
+
