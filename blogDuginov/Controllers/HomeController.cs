@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using blogDuginov.Models;
+using blogDuginov.Domain.DB;
+using blogDuginov.ViewModels.Blog;
 
 namespace blogDuginov.Controllers
 {
@@ -15,14 +17,16 @@ namespace blogDuginov.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly BlogDbContext _blogDbContext;
 
         /// <summary>
         /// Конструктор
         /// </summary>
         /// <param name="logger"></param>
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, BlogDbContext blogDbContext)
         {
             _logger = logger;
+            _blogDbContext = blogDbContext ?? throw new ArgumentNullException(nameof(blogDbContext));
         }
 
         /// <summary>
@@ -31,7 +35,18 @@ namespace blogDuginov.Controllers
         /// <returns></returns>
         public IActionResult Index()
         {
-            return View();
+            /*return View();*/
+
+            var posts = _blogDbContext.BlogPosts
+                .Select(x => new ShowAllPostViewModel
+                {
+                    Author = x.Owner.FullName,
+                    Date = x.Created,
+                    Data = x.Data,
+                    Title = x.Title
+                }).OrderByDescending(x => x.Date);
+
+            return View(posts);
         }
 
         /// <summary>
